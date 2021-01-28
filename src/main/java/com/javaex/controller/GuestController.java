@@ -19,7 +19,7 @@ public class GuestController {
 	@Autowired
 	private GuestService guService;
 	
-	
+	//방명록 리스트 보여주기
 	@RequestMapping(value="list", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model) {
 		
