@@ -98,7 +98,6 @@
 							
 						</table>
 						
-						<input type="hidden" name="action" value="add">
 						
 						<!-- //guestWrite -->
 						
