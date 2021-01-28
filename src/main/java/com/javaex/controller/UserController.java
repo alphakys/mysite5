@@ -36,10 +36,7 @@ public class UserController {
 	}
 	
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> refs/remotes/origin/master
+
 	//로그인 페이지
 	@RequestMapping(value="loginForm", method ={RequestMethod.GET, RequestMethod.POST})
 	public String loginForm() {
