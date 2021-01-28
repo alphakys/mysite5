@@ -41,12 +41,6 @@ public class UserController {
 	}
 	
 	
-	//회원가입 성공시 로그인 창으로 넘겨줌
-	@RequestMapping(value="joinOk", method= {RequestMethod.GET, RequestMethod.POST})
-	public String joinOk() {
-		
-		return "user/joinOk";
-	}
 	
 	//로그인 페이지
 	@RequestMapping(value="loginForm", method ={RequestMethod.GET, RequestMethod.POST})
