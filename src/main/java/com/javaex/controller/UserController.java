@@ -1,7 +1,5 @@
 package com.javaex.controller;
 
-
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javaex.dao.UserDao;
+import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
 
 @Controller
 @RequestMapping(value="user")
 public class UserController {
 	
-	//<<필드>>
 	@Autowired
-	private UserDao usDao;
-	
-	
+	private UserService usService;
+		
 	//회원가입 페이지로 넘김
 	@RequestMapping(value="joinForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String joinForm() {
@@ -32,21 +27,14 @@ public class UserController {
 	}
 	
 	//DB에 회원가입 정보 등록
-	@RequestMapping(value="insert", method= {RequestMethod.GET, RequestMethod.POST})
-	public String insert(@ModelAttribute UserVo usVo) {
+	@RequestMapping(value="join", method= {RequestMethod.GET, RequestMethod.POST})
+	public String join(@ModelAttribute UserVo usVo) {
 		
-		usDao.insert(usVo);
+		usService.insert(usVo);
 		
 		return "user/joinOk";
 	}
 	
-	
-	//회원가입 성공시 로그인 창으로 넘겨줌
-	@RequestMapping(value="joinOk", method= {RequestMethod.GET, RequestMethod.POST})
-	public String joinOk() {
-		
-		return "user/joinOk";
-	}
 	
 	//로그인 페이지
 	@RequestMapping(value="loginForm", method ={RequestMethod.GET, RequestMethod.POST})
@@ -62,7 +50,7 @@ public class UserController {
 	@RequestMapping(value="login", method ={RequestMethod.GET, RequestMethod.POST})
 	public String login(@ModelAttribute UserVo usVo, HttpSession session) {
 		
-		UserVo authUser = usDao.getOne(usVo);
+		UserVo authUser = (UserVo)usService.login(usVo);
 		
 		
 		if(authUser == null) {
@@ -94,12 +82,22 @@ public class UserController {
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
-		int no = authUser.getNo();
+		if(authUser == null) 
+		{		
+			return "redirect:/";
+		}
 		
-		UserVo usInfo = usDao.getInfo(no);
+		else {
+				int no = authUser.getNo();
 		
-		model.addAttribute("userInfo", usInfo);
-		return "user/modifyForm";
+				UserVo usInfo = usService.getInfo(no);
+		
+				model.addAttribute("userInfo", usInfo);
+		
+				return "user/modifyForm";
+		
+		     }
+	
 	}
 	
 	
@@ -109,10 +107,11 @@ public class UserController {
 	@RequestMapping(value="modify", method={RequestMethod.GET, RequestMethod.POST})
 	public String modify(@ModelAttribute UserVo modiVo, HttpSession session) {
 		
-			int count = usDao.update(modiVo);
+			int count = usService.update(modiVo);
+		//세션에 변경된 정보 재저장
 			
-			//세션에 변경된 정보 재저장
 			if(count==1) {
+				
 				UserVo authUser = (UserVo)session.getAttribute("authUser");
 				authUser.setName(modiVo.getName());
 			

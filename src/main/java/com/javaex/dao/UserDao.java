@@ -15,12 +15,11 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	//로그인 정보 등록
-	public int insert(UserVo usVo) {
+	public void insert(UserVo usVo) {
 		//성공시 count(int)를 넘겨줌
-		int count;
 		
-		count = sqlSession.insert("user.insert", usVo);
-		return count;
+		sqlSession.insert("user.insert", usVo);
+		
 	}
 	
 	//로그인을 위한 메서드 

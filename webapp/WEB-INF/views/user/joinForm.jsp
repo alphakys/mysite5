@@ -103,7 +103,7 @@
 					
 					<div id="joinForm">
 					
-						<form action="${pageContext.request.contextPath }/user/insert" method="post" name="userInfo" 
+						<form action="${pageContext.request.contextPath }/user/join" method="post" name="userInfo" 
 						onsubmit = "return checkValue();">
 	
 							<!-- 아이디 -->
