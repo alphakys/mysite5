@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+
+	<select id="selectList" resultType="BoardVo" parameterType="int">
+	
+			<![CDATA[
+		
+				select		
+				            b.no no,
+				            title,
+				            u.name name,
+				            content,
+				            hit,
+				            reg_date "date",
+				            user_no userNo
+				             
+				from board b,(select   rownum r,
+				                       no
+				              from    (select       rownum,
+				                                    no
+				                       from         board
+				                       order by no desc)
+				              )ro, users u                
+				where b.no = ro.no and u.no = b.user_no
+				and r >= ((#{page}-1)*10) +1 and r <= (#{page}*10)
+				
+			]]>
+	
+	</select>
+
+	
+	<select id="selectTotalPost" resultType = "int">
+		
+		<![CDATA[
+			
+			select count(no)
+			from board		
+		]]>
+		
+	
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id= "selectPost" parameterType="int" resultType="BoardVo">
+	
+		<![CDATA[
+		
+			select		title,
+                        u.name,
+						content,
+						hit,
+						reg_date "date",
+						user_no userNo
+						
+			from 		board b, users u
+			
+            where       b.user_no = u.no and b.no = #{no}
+		
+		]]>
+	
+	
+	</select>
+
+
+	<update id="updateHit" parameterType="int">
+		
+		<![CDATA[
+	
+			update      board
+            set         hit = hit+1
+            where       no = #{no}
+	
+		]]>
+	
+	</update>
+	
+	
+	<insert id="insert" parameterType="BoardVo">
+	
+		<![CDATA[
+	
+			insert  into board
+           	values(seq_board_no.nextval, #{title}, #{content}, 0, sysdate, #{userNo})
+	
+		]]>
+	
+	</insert>
+	
+	
+	
+	
+	
+	
+
+
+
+</mapper>

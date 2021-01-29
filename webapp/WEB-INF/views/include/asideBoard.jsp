@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>aside</title>
+<title>asideBoard</title>
 </head>
 <body>
 
