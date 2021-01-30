@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 
@@ -102,11 +102,13 @@
 										<td>${boVo.hit}</td>
 										<td>${boVo.date}</td>
 	
-										<td><c:if test="${sessionScope.authUser.no eq boVo.userNo}">
+										<td>
+											<c:if test="${sessionScope.authUser.no eq boVo.userNo}">
 	
 												<a href="${pageContext.request.contextPath }/board/delete&no=${boVo.no}">[삭제]</a>
 	
-											</c:if></td>
+											</c:if>
+										</td>
 	
 									</tr>
 	
@@ -116,7 +118,9 @@
 	
 	
 						</table>
-	
+					
+					<fmt:parseNumber var="totalPage" value="${totalPost/10}" integerOnly="true"/>
+						
 						<div id="paging">
 	
 							<ul>
@@ -140,8 +144,7 @@
 								</c:choose>
 
 								<!--◀ 이전 페이지  -->
-	
-	
+
 								<!-- <<본 페이지>> -->
 								
 								<!-- active 기능 구현 -->
@@ -150,7 +153,7 @@
 	
 									<c:when test="${totalPost%10 > 0}">
 	
-										<c:forEach var="page" begin="1" end="${(totalPost/10) +1}">
+										<c:forEach var="page" begin="1" end="${totalPage +1}">
 	
 											<c:choose>
 												<c:when test="${param.page eq page }">
@@ -173,7 +176,7 @@
 	
 									<c:otherwise>
 	
-										<c:forEach var="page" begin="1" end="${totalPost/10}">
+										<c:forEach var="page" begin="1" end="${totalPage}">
 	
 											<c:choose>
 												<c:when test="${param.page eq page }">
@@ -198,8 +201,7 @@
 	
 	
 								<!-- <<본 페이지>> -->
-
-
+	
 								<!--▶ 다음 페이지 -->
 								
 								<c:choose>
@@ -207,9 +209,9 @@
 									<c:when test="${totalPost%10 > 0}">
 										
 										<c:choose>
-											<c:when test="${param.page >= (totalPost/10)+1}">
-	
-												<li><a href="${pageContext.request.contextPath }/board/list?page=${(totalPost/10)+1}">▶</a></li>
+											<c:when test="${param.page >= totalPage+1}">
+												
+												<li><a href="${pageContext.request.contextPath }/board/list?page=${totalPage+1}">▶</a></li>
 	
 											</c:when>
 	
@@ -224,9 +226,9 @@
 						
 									<c:otherwise>
 										<c:choose>
-											<c:when test="${(totalPost/10) <= param.page}">
+											<c:when test="${totalPage <= param.page}">
 	
-												<li><a href="${pageContext.request.contextPath }/board/list?page=${totalPost/10}">▶</a></li>
+												<li><a href="${pageContext.request.contextPath }/board/list?page=${totalPage}">▶</a></li>
 	
 											</c:when>
 	

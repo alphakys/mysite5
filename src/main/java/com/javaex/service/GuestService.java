@@ -4,10 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
 import com.javaex.dao.GuestDao;
 import com.javaex.vo.GuestVo;
 

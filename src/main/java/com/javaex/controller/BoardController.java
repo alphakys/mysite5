@@ -26,8 +26,10 @@ public class BoardController {
 	@RequestMapping(value="list", method= {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model, @RequestParam("page") int page) {
 		
+		int totalPost = boService.getTotalPost();
+		
 		model.addAttribute("boList", boService.getList(page));
-		model.addAttribute("totalPost", boService.getTotalPost());
+		model.addAttribute("totalPost", totalPost);
 		
 		return "board/list";
 	}

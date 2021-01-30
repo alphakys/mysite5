@@ -99,7 +99,7 @@
 						</c:if>
 						
 						
-						<a id="btn_modify" href="${pageContext.request.contextPath }/board?page=1">목록</a>
+						<a id="btn_modify" href="${pageContext.request.contextPath }/board/list?page=1">목록</a>
 						
 					</form>
 	                <!-- //form -->
