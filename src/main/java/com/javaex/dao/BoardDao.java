@@ -43,7 +43,7 @@ public class BoardDao {
 	
 	public void updateHit(int no) {
 		
-		sqlSession.update("updateHit", no);
+		sqlSession.update("board.updateHit", no);
 		
 	}
 	
