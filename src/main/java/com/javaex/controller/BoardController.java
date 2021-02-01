@@ -68,6 +68,12 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping(value="delete", method= {RequestMethod.GET, RequestMethod.POST})
+	public String delete(@RequestParam("no") int no) {
+		
+		boService.delete(no);
+		return "redirect:list?page=1";
+	}
 	
 	
 	
@@ -89,7 +95,7 @@ public class BoardController {
 		
 		boService.write(boVo);
 		
-		return "redirect:list";
+		return "redirect:list?page=1";
 	}
 	
 	

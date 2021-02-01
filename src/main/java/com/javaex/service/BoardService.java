@@ -39,6 +39,12 @@ public class BoardService {
 	}
 	
 	
+	public void delete(int no) {
+		
+		boDao.delete(no);
+	}
+	
+	
 	
 	
 	

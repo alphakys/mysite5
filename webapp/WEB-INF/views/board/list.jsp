@@ -103,9 +103,9 @@
 										<td>${boVo.date}</td>
 	
 										<td>
-											<c:if test="${sessionScope.authUser.no eq boVo.userNo}">
+											<c:if test="${authUser.no eq boVo.userNo}">
 	
-												<a href="${pageContext.request.contextPath }/board/delete&no=${boVo.no}">[삭제]</a>
+												<a href="${pageContext.request.contextPath }/board/delete?no=${boVo.no}">[삭제]</a>
 	
 											</c:if>
 										</td>

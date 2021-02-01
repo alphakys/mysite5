@@ -110,7 +110,18 @@
 	</update>
 	
 	
+	<delete id="delete" parameterType="int">
+		
+		<![CDATA[
+		
+			delete		board
+			
+			where		no = #{no}
+			
+		]]>
 	
+	
+	</delete>
 	
 	
 	
