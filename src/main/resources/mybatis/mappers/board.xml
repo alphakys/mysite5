@@ -95,6 +95,24 @@
 	</insert>
 	
 	
+	<update id="update" parameterType="BoardVo">
+		
+		<![CDATA[
+		
+			update		board
+			set			title = #{title},
+						content = #{content}
+			where		no = #{no}
+			
+		]]>
+	
+	
+	</update>
+	
+	
+	
+	
+	
 	
 	
 	

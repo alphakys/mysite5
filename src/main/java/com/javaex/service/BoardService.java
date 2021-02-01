@@ -32,6 +32,13 @@ public class BoardService {
 	}
 	
 	
+	public void modify(BoardVo modiPost) {
+		
+		boDao.update(modiPost);
+		
+	}
+	
+	
 	
 	
 	

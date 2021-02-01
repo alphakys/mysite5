@@ -59,6 +59,19 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping(value="modify", method= {RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute BoardVo modiPost) {
+		
+		boService.modify(modiPost);
+		
+		return "redirect:read?no="+modiPost.getNo();
+	}
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value="writeForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String writeForm() {

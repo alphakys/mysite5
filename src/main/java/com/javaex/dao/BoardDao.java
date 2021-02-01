@@ -48,6 +48,16 @@ public class BoardDao {
 	}
 	
 	
+	public void update(BoardVo modiPost) {
+		
+		sqlSession.update("board.update", modiPost);
+		
+	}
+	
+	
+	
+	
+	
 	public void insert(BoardVo boVo) {
 		
 		sqlSession.insert("board.insert", boVo);
