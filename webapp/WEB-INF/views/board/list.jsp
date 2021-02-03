@@ -64,7 +64,7 @@
 
 		<div id="list">
 
-			<form action="${pageContext.request.contextPath }/board" method="post">
+			<form action="${pageContext.request.contextPath }/board/searchList" method="post">
 				
 				<input type="hidden" name="page" value="1">
 
@@ -142,6 +142,9 @@
 			<div id="paging">
 
 				<ul>
+					<!-- ◀◀첫 페이지 -->
+					<li><a href="${pageContext.request.contextPath }/board/list?page=1">◀◀</a></li>
+
 
 					<!--◀ 이전 페이지  -->
 					
@@ -210,6 +213,12 @@
 					</c:choose>
 					
 					<!--▶ 다음 페이지 -->
+
+				<!-- 마지막 페이지 -->
+				
+				<li><a href="${pageContext.request.contextPath }/board/list?page=${pageVo.lastPage}">▶▶</a></li>
+				
+				<!-- 마지막 페이지 -->
 
 				</ul>
 

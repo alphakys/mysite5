@@ -36,6 +36,44 @@
 	
 	</select>
 
+
+
+	<select id="selecSearchList" resultType="BoardVo" parameterType="String">
+	
+			<![CDATA[
+		
+				select		
+				            b.no no,
+				            title,
+				            u.name name,
+				            content,
+				            hit,
+				            reg_date "date",
+				            user_no userNo,
+				            group_no groupNo,
+				            order_no orderNo,
+				            depth
+				             
+				from rboard b,(select   rownum r,
+				                       no
+				              from    (select       rownum,
+				                                    no
+				                       from         rboard
+				                       order by no desc)
+				              )ro, users u                
+				where b.no = ro.no and u.no = b.user_no
+				and r >= ((#{page}-1)*10) +1 and r <= (#{page}*10)
+				and name = #{keyword}
+				order by group_no desc, order_no asc
+				
+			]]>
+	
+	</select>
+
+
+
+
+
 	
 	<select id="selectTotalPost" resultType = "int">
 		
@@ -99,11 +137,7 @@
 	
 	
 	
-	
-	
-	
-	
-	<insert id="insert" parameterType="BoardVo">
+ 	<insert id="insert" parameterType="BoardVo">
 	
 		<![CDATA[
 	
@@ -128,12 +162,7 @@
 	
 	</insert>
 	
-	
-	
-	
-	
-	
-	
+
 	
 	<update id="update" parameterType="BoardVo">
 		
@@ -148,6 +177,8 @@
 	
 	
 	</update>
+	
+	
 	
 	
 	<delete id="delete" parameterType="int">

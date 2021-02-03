@@ -1,5 +1,6 @@
 package com.javaex.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,30 +20,57 @@ public class BoardService {
 	private BoardDao boDao;
 	
 	
-	public List<BoardVo> getList(int page){
+	public HashMap<String, Object> getList(int page){
 		
 		List<BoardVo> boList = boDao.selectList(page);	
+		PageVo pageVo = paging(page-1);
 		
-		return boList ;
+		HashMap<String, Object> listMap = new HashMap<>();
+		
+		listMap.put("boList", boList);
+		listMap.put("pageVo", pageVo);
+		
+		
+		return listMap;
+	}
+	
+	public List<BoardVo> getSearchList(String keyword){
+		
+		List<BoardVo> searchList = boDao.selectSearchList(keyword);
+		
+		return searchList;
 	}
 	
 	
+	
+	
 	public PageVo paging(int page) {
-		
+		//첫 페이지
 		int startPage = ((page/10)*10)+1;
+		//10개 단위중 끝 페이지 10,20,30~~
 		int endPage = ((page/10)+1)*10;
-		
+		//총 게시글의 마지막 페이지를 알기 위한 모든 게시글 count해서 가져온 값
 		int totalPost = boDao.selectTotalPost();
 		
+		//게시판의 가장 마지막 페이지
 		int lastPage;
 		
+		//게시글을 10개씩 리스트로 뿌려주기로 해서 나머지가 0보다 클 경우는 게시글의 총 합을 나눈 몫에 +1
+		//게시글이 100, 200, 10으로 나누어 떨어질 때는 총 게시글을 10으로 나눈 몫이 마지막 페이지
 		if(totalPost%10 !=0) {
 			lastPage = (totalPost/10)+1;
+			
+			
 		}
 		else {
 			lastPage = totalPost/10;
+			
 		}
 		
+		//만약 출력해야할 끝 페이지가 총 게시글중 마지막 페이지 보다 클 경우 총 게시글 마지막 페이지 출력
+		if(endPage> lastPage) {
+				endPage=lastPage;
+			}
 		
 		PageVo paVo = new PageVo();
 		
@@ -77,12 +105,7 @@ public class BoardService {
 		
 	}
 
-	
-
-	
-	
-
-		
+			
 		
 	public void modify(BoardVo modiPost) {
 		

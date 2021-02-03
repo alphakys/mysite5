@@ -26,6 +26,17 @@ public class BoardDao {
 	}
 	
 	
+	public List<BoardVo> selectSearchList(String keyword){
+		
+		List<BoardVo> searchList = sqlSession.selectList("board.selectSearchList", keyword);
+		
+		return searchList;
+		
+	}
+	
+	
+	
+	
 	
 	
 	public int selectTotalPost() {

@@ -1,5 +1,6 @@
 package com.javaex.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,18 +26,31 @@ public class BoardController {
 	@Autowired
 	private BoardService boService;
 	
-	
+	//게시판 리스트 출력 
 	@RequestMapping(value="list", method= {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model, @RequestParam("page") int page) {
 		
-		//1페이지에 해당하는 게시물 10개 가져오기 위한 메소드
-		List<BoardVo> boList = boService.getList(page);
+		//1페이지에 해당하는 게시물 10개 가져오기 위한 메소드(service 영역에서 map에 담아 페이지 처리를 위한 pageVo, 
+		//게시판 list return받아 스프링 사용 목적에 맞는 방식으로 사용하고자 시도)
+		HashMap<String, Object> listMap = boService.getList(page);
 		//(page-1)은 게시판의 10개씩 페이징하기 위한 알고리즘.page의 일의 자리가 0~9일 때 1부터 10까지의 페이징 하는 알고리즘
 		//10부터 19까지 일때 즉 일의 자리가 0~9일 때 10개의 페이징을 할 수 있는 알고리즘만 떠올라 page-1을 해서 페이징 처리
-		PageVo paVo = boService.paging(page-1);
+		List<BoardVo> boList = (List<BoardVo>)listMap.get("boList");
+		PageVo pageVo = (PageVo)listMap.get("pageVo");
 		
 		model.addAttribute("boList", boList);
-		model.addAttribute("pageVo", paVo);
+		model.addAttribute("pageVo", pageVo);
+		
+		
+		return "board/list";
+	}
+	
+	
+	@RequestMapping(value="searchList", method= {RequestMethod.GET, RequestMethod.POST})
+	public String searchList(@RequestParam("keyword") String keyword) {
+							 
+		
+		List<BoardVo> searchList = boService.getSearchList(keyword);
 		
 		
 		return "board/list";
@@ -44,6 +58,9 @@ public class BoardController {
 	
 	
 	
+	
+	
+	//게시글 읽는 메소드
 	@RequestMapping(value="read", method= {RequestMethod.GET, RequestMethod.POST})
 	public String read(Model model, @RequestParam("no") int no) {
 		
@@ -55,7 +72,7 @@ public class BoardController {
 	}
 	
 	
-	
+	//게시글 수정 메소드
 	@RequestMapping(value="modifyForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String modifyForm(Model model, @RequestParam("no") int no) {
 		
@@ -76,6 +93,7 @@ public class BoardController {
 	}
 	
 	
+	//게시글 삭제 메소드 로그인 시 자기 글만 삭제가능
 	@RequestMapping(value="delete", method= {RequestMethod.GET, RequestMethod.POST})
 	public String delete(@RequestParam("no") int no) {
 		
@@ -84,9 +102,7 @@ public class BoardController {
 	}
 	
 	
-	
-	
-	
+	//게시판에 글쓰기 위한 메소드
 	@RequestMapping(value="writeForm", method= {RequestMethod.GET, RequestMethod.POST})
 	public String writeForm() {
 		
@@ -94,8 +110,7 @@ public class BoardController {
 		return "board/writeForm";
 	}
 	
-	
-	
+		
 	
 	@RequestMapping(value="write", method= {RequestMethod.GET, RequestMethod.POST})
 	public String write(@ModelAttribute BoardVo boVo, HttpSession session,@RequestParam("type") String type) {
