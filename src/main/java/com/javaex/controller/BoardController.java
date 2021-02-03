@@ -29,8 +29,11 @@ public class BoardController {
 	@RequestMapping(value="list", method= {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model, @RequestParam("page") int page) {
 		
+		//1페이지에 해당하는 게시물 10개 가져오기 위한 메소드
 		List<BoardVo> boList = boService.getList(page);
-		PageVo paVo = boService.paging(page);
+		//(page-1)은 게시판의 10개씩 페이징하기 위한 알고리즘.page의 일의 자리가 0~9일 때 1부터 10까지의 페이징 하는 알고리즘
+		//10부터 19까지 일때 즉 일의 자리가 0~9일 때 10개의 페이징을 할 수 있는 알고리즘만 떠올라 page-1을 해서 페이징 처리
+		PageVo paVo = boService.paging(page-1);
 		
 		model.addAttribute("boList", boList);
 		model.addAttribute("pageVo", paVo);

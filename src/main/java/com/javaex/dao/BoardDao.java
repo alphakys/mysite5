@@ -21,6 +21,8 @@ public class BoardDao {
 		List<BoardVo> boList = sqlSession.selectList("board.selectList", page);
 		
 		return boList;
+		
+
 	}
 	
 	

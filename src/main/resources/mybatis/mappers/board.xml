@@ -16,17 +16,21 @@
 				            content,
 				            hit,
 				            reg_date "date",
-				            user_no userNo
+				            user_no userNo,
+				            group_no groupNo,
+				            order_no orderNo,
+				            depth
 				             
-				from board b,(select   rownum r,
+				from rboard b,(select   rownum r,
 				                       no
 				              from    (select       rownum,
 				                                    no
-				                       from         board
+				                       from         rboard
 				                       order by no desc)
 				              )ro, users u                
 				where b.no = ro.no and u.no = b.user_no
 				and r >= ((#{page}-1)*10) +1 and r <= (#{page}*10)
+				order by group_no desc, order_no asc
 				
 			]]>
 	
@@ -38,7 +42,7 @@
 		<![CDATA[
 			
 			select count(no)
-			from board		
+			from rboard		
 		]]>
 		
 	
@@ -59,7 +63,7 @@
 						reg_date "date",
 						user_no userNo
 						
-			from 		board b, users u
+			from 		rboard b, users u
 			
             where       b.user_no = u.no and b.no = #{no}
 		
@@ -73,7 +77,7 @@
 		
 		<![CDATA[
 	
-			update      board
+			update      rboard
             set         hit = hit+1
             where       no = #{no}
 	
@@ -81,24 +85,61 @@
 	
 	</update>
 	
+	<update id="updateOrderNo" parameterType="int">
+		
+		<![CDATA[
+	
+			update      rboard
+            set         order_no = order_no +1
+            where       group_no = #{groupNo} and depth>0
+	
+		]]>
+	
+	</update>
+	
+	
+	
+	
+	
+	
 	
 	<insert id="insert" parameterType="BoardVo">
 	
 		<![CDATA[
 	
-			insert  into board
-           	values(seq_board_no.nextval, #{title}, #{content}, 0, sysdate, #{userNo})
+			insert into rboard
+			values(seq_rboard_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, seq_rboard_no.nextval, 1, 0)
+			
 	
 		]]>
 	
 	</insert>
 	
 	
+	<insert id="replyInsert" parameterType="BoardVo">
+	
+		<![CDATA[
+	
+			insert into rboard
+			values(seq_rboard_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, #{groupNo}, #{orderNo}+1, #{depth}+1)
+			
+	
+		]]>
+	
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
 	<update id="update" parameterType="BoardVo">
 		
 		<![CDATA[
 		
-			update		board
+			update		rboard
 			set			title = #{title},
 						content = #{content}
 			where		no = #{no}
@@ -113,7 +154,7 @@
 		
 		<![CDATA[
 		
-			delete		board
+			delete		rboard
 			
 			where		no = #{no}
 			

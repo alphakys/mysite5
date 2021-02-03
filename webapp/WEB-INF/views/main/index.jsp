@@ -37,6 +37,7 @@
 	
 				<div id="index"> 
 				
+				
 					<img id="profile-img" src="${pageContext.request.contextPath }/assets/image/profile.jpg">
 					
 					<div id="greetings">

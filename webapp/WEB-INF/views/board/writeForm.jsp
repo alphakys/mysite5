@@ -58,7 +58,24 @@
 				<div id="board">
 					<div id="writeForm">
 					
-						<form action="${pageContext.request.contextPath }/board/write" method="post">
+						<form action="${pageContext.request.contextPath }/board/write" method="get">
+							
+							<c:choose>
+							
+								<c:when test="${'reply' eq param.type}">
+									<input type="hidden" name="groupNo" value="${param.groupNo }">
+									<input type="hidden" name="orderNo" value="${param.orderNo }">
+									<input type="hidden" name="depth" value="${param.depth }">
+									<input type="hidden" name="type" value="${param.type }">
+									
+								</c:when>
+								<c:otherwise>
+									<input type="hidden" name="type" value="write">
+								</c:otherwise>
+							
+							
+							</c:choose>
+							
 							
 							
 							<!-- 제목 -->

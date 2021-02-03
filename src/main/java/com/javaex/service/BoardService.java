@@ -32,10 +32,23 @@ public class BoardService {
 		int startPage = ((page/10)*10)+1;
 		int endPage = ((page/10)+1)*10;
 		
+		int totalPost = boDao.selectTotalPost();
+		
+		int lastPage;
+		
+		if(totalPost%10 !=0) {
+			lastPage = (totalPost/10)+1;
+		}
+		else {
+			lastPage = totalPost/10;
+		}
+		
+		
 		PageVo paVo = new PageVo();
 		
 		paVo.setStartPage(startPage);
 		paVo.setEndPage(endPage);
+		paVo.setLastPage(lastPage);
 		
 		return paVo;
 	}
