@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.PageVo;
+
+
 
 @Service
 public class BoardService {
@@ -20,8 +23,26 @@ public class BoardService {
 		
 		List<BoardVo> boList = boDao.selectList(page);	
 		
-		return boList;
+		return boList ;
 	}
+	
+	
+	public PageVo paging(int page) {
+		
+		int startPage = ((page/10)*10)+1;
+		int endPage = ((page/10)+1)*10;
+		
+		PageVo paVo = new PageVo();
+		
+		paVo.setStartPage(startPage);
+		paVo.setEndPage(endPage);
+		
+		return paVo;
+	}
+	
+	
+	
+	
 	
 	
 	public int getTotalPost() {
@@ -32,6 +53,24 @@ public class BoardService {
 	}
 	
 	
+	
+	public BoardVo read(int no) {
+		
+		boDao.updateHit(no);
+		
+		BoardVo post = boDao.selectPost(no);
+				
+		return post;
+		
+	}
+
+	
+
+	
+	
+
+		
+		
 	public void modify(BoardVo modiPost) {
 		
 		boDao.update(modiPost);
@@ -45,24 +84,14 @@ public class BoardService {
 	}
 	
 	
-	
-	
-	
-	
 	public BoardVo getPost(int no) {
 		
 		BoardVo post = boDao.selectPost(no);
-				
+		
 		return post;
-		
 	}
 	
 	
-	public void updateHit(int no) {
-		
-		boDao.updateHit(no);
-		
-	}
 	
 	
 	public void write(BoardVo boVo) {
@@ -71,7 +100,25 @@ public class BoardService {
 	}
 	
 	
+	public void replyWrite(BoardVo boVo) {
+		
+		boDao.updateOrderNo(boVo.getGroupNo());
+
+		String tab = "  ";
+		for(int i=0; i<boVo.getDepth(); i++) {
+			
+			tab+=tab.concat(tab);
+			
+		}
+		
+		
+		String title = tab.concat(boVo.getTitle());
+		
+		boVo.setTitle(title);
 	
+		boDao.replyInsert(boVo);
+		
+	}
 	
 	
 	

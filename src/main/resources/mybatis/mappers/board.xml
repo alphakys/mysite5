@@ -4,6 +4,7 @@
 <mapper namespace="board">
 
 
+
 	<select id="selectList" resultType="BoardVo" parameterType="int">
 	
 			<![CDATA[
@@ -44,9 +45,7 @@
 	
 	</select>
 	
-	
-	
-	
+		
 	
 	
 	<select id= "selectPost" parameterType="int" resultType="BoardVo">

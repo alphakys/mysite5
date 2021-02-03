@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.javaex.vo.BoardVo;
+
 
 @Repository
 public class BoardDao {
@@ -22,6 +22,8 @@ public class BoardDao {
 		
 		return boList;
 	}
+	
+	
 	
 	
 	public int selectTotalPost() {
@@ -62,13 +64,30 @@ public class BoardDao {
 	
 	
 	
-	
-	
 	public void insert(BoardVo boVo) {
 		
 		sqlSession.insert("board.insert", boVo);
 		
 	}
+	
+	
+	public void replyInsert(BoardVo boVo) {
+		
+		sqlSession.insert("board.replyInsert", boVo);
+	}
+	
+	
+	public void updateOrderNo(int groupNo) {
+		
+		sqlSession.update("board.updateOrderNo", groupNo);
+
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

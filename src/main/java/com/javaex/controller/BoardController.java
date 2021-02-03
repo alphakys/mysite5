@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.PageVo;
 import com.javaex.vo.UserVo;
 
 @Controller
@@ -26,10 +29,12 @@ public class BoardController {
 	@RequestMapping(value="list", method= {RequestMethod.GET, RequestMethod.POST})
 	public String list(Model model, @RequestParam("page") int page) {
 		
-		int totalPost = boService.getTotalPost();
+		List<BoardVo> boList = boService.getList(page);
+		PageVo paVo = boService.paging(page);
 		
-		model.addAttribute("boList", boService.getList(page));
-		model.addAttribute("totalPost", totalPost);
+		model.addAttribute("boList", boList);
+		model.addAttribute("pageVo", paVo);
+		
 		
 		return "board/list";
 	}
@@ -39,8 +44,8 @@ public class BoardController {
 	@RequestMapping(value="read", method= {RequestMethod.GET, RequestMethod.POST})
 	public String read(Model model, @RequestParam("no") int no) {
 		
-		boService.updateHit(no);
-		BoardVo post = boService.getPost(no);
+		
+		BoardVo post = boService.read(no);
 		
 		model.addAttribute("post", post);
 		return "board/read";
@@ -87,13 +92,29 @@ public class BoardController {
 	}
 	
 	
+	
+	
 	@RequestMapping(value="write", method= {RequestMethod.GET, RequestMethod.POST})
-	public String write(@ModelAttribute BoardVo boVo, HttpSession session) {
+	public String write(@ModelAttribute BoardVo boVo, HttpSession session,@RequestParam("type") String type) {
+				
+		if("reply".equals(type)) {
+			
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		boVo.setUserNo(authUser.getNo());
 		
-		boService.write(boVo);
+		boService.replyWrite(boVo);
+		
+		}
+		else {
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+			boVo.setUserNo(authUser.getNo());
+		
+			boService.write(boVo);
+			
+		}
+		
 		
 		return "redirect:list?page=1";
 	}
