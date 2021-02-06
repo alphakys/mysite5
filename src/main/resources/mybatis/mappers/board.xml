@@ -38,7 +38,7 @@
 
 
 
-	<select id="selecSearchList" resultType="BoardVo" parameterType="String">
+	<select id="selectSearchList" resultType="BoardVo" parameterType="map">
 	
 			<![CDATA[
 		
@@ -63,7 +63,7 @@
 				              )ro, users u                
 				where b.no = ro.no and u.no = b.user_no
 				and r >= ((#{page}-1)*10) +1 and r <= (#{page}*10)
-				and name = #{keyword}
+				and u.name = #{keyword} 
 				order by group_no desc, order_no asc
 				
 			]]>

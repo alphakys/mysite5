@@ -64,7 +64,7 @@
 
 		<div id="list">
 
-			<form action="${pageContext.request.contextPath }/board/searchList" method="post">
+			<form action="${pageContext.request.contextPath }/board/search" method="post">
 				
 				<input type="hidden" name="page" value="1">
 
@@ -91,9 +91,9 @@
 
 
 				<c:forEach items="${boList}" var="boVo">
-
+				
 					<tbody>
-
+					
 						<tr>
 							<td>${boVo.no }</td>
 							
@@ -129,9 +129,9 @@
 							</td>
 
 						</tr>
-
+					
 					</tbody>
-
+				
 				</c:forEach>
 
 

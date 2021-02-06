@@ -17,12 +17,21 @@
 		<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 		<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
 		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		
+
 		
+		<script type="text/javascript">
 		
+		function checkName(){
+			
 		
-		
-		
+		console.log($("#input-uid").val());
+		console.log($("#input-pass").val());
+		console.log($("#input-name").val());
+			
+		}
+		</script>
 		
 		
 		
@@ -97,20 +106,20 @@
 	            </div>
 	            <!-- //content-head -->
 	
-	
 				<div id="user">
 				
 					
 					<div id="joinForm">
 					
 						<form action="${pageContext.request.contextPath }/user/join" method="post" name="userInfo" 
-						onsubmit = "return checkValue();">
+						onsubmit = "return checkName();">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-								<button type="submit" id="">중복체크</button>
+								<button type="submit" id="" onclick="">중복체크</button>
+								
 							</div>
 	
 							<!-- 비밀번호 -->
@@ -161,7 +170,8 @@
 			<!-- //content  -->
 			<div class="clear"></div>
 			
-		
+	
+			
 			<!-- //footer -->
 			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 	

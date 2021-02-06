@@ -46,13 +46,21 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping(value="searchList", method= {RequestMethod.GET, RequestMethod.POST})
-	public String searchList(@RequestParam("keyword") String keyword) {
+	@RequestMapping(value="search", method= {RequestMethod.GET, RequestMethod.POST})
+	public String search(@RequestParam("keyword") String keyword,
+						 @RequestParam("page") int page,
+						 Model model) {
 							 
+		HashMap<String, Object> keywordMap = new HashMap<>();
+		keywordMap.put("keyword", keyword);
+		keywordMap.put("page", page);
 		
-		List<BoardVo> searchList = boService.getSearchList(keyword);
+		List<BoardVo> searchList = (List<BoardVo>)boService.getSearchList(keywordMap).get("searchList");
+		PageVo pageVo = (PageVo)boService.getSearchList(keywordMap).get("pageVo");
 		
-		
+		model.addAttribute("boList", searchList);
+		model.addAttribute("pageVo", pageVo);
+	
 		return "board/list";
 	}
 	

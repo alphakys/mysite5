@@ -1,5 +1,6 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,9 +27,9 @@ public class BoardDao {
 	}
 	
 	
-	public List<BoardVo> selectSearchList(String keyword){
+	public List<BoardVo> selectSearchList(HashMap<String, Object> keywordMap){
 		
-		List<BoardVo> searchList = sqlSession.selectList("board.selectSearchList", keyword);
+		List<BoardVo> searchList = sqlSession.selectList("board.selectSearchList", keywordMap);
 		
 		return searchList;
 		

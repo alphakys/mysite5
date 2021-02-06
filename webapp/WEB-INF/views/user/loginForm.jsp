@@ -17,27 +17,11 @@
 	<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
 	
-	<!--  
-	<script>
+	 
+
 	
-		function fail(){
-			alert("아이디 또는 비밀번호가 틀렸습니다");
-		}
-	
-	
-	</script>
-	
-	
-		<c:if test="${'fail' eq param.result }">
-			
-			<script>
-				fail();
-				
-			</script>
-			
-		</c:if>
-	-->
-	
+		
+		
 	</head>
 	
 	
@@ -91,11 +75,6 @@
 								<input type="password" id="input-pass" name="pw" value="" placeholder="비밀번호를 입력하세요"	>
 							</div>
 							
-							<c:if test="${'fail' eq param.result }">
-							
-								<p>로그인에 실패했습니다 다시 입력해주세요</p>
-							
-							</c:if>
 							
 							<!-- 버튼영역 -->
 			                <div class="button-area">

@@ -34,11 +34,19 @@ public class BoardService {
 		return listMap;
 	}
 	
-	public List<BoardVo> getSearchList(String keyword){
+	public HashMap<String, Object> getSearchList(HashMap<String, Object> keywordMap){
 		
-		List<BoardVo> searchList = boDao.selectSearchList(keyword);
+		List<BoardVo> searchList = boDao.selectSearchList(keywordMap);
 		
-		return searchList;
+		int page = (int)(keywordMap.get("page"))-1;
+		PageVo pageVo = paging(page);
+		
+		HashMap<String, Object> searchListMap = new HashMap<>();
+		
+		searchListMap.put("searchList", searchList);
+		searchListMap.put("pageVo", pageVo);
+
+		return searchListMap;
 	}
 	
 	
