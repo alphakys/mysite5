@@ -17,7 +17,24 @@
 		]]>
 	
 	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="GuestVo">
+	
+		<![CDATA[
+			
+			select		no,
+						name,
+						content,
+						reg_date "date"
+			from 		guestbook
+			where 		no = #{no}
+		
+		]]>
+	
+	</select>
+	
 
+	
 	<insert id = "insert">
 		
 		<![CDATA[
@@ -33,17 +50,36 @@
 
 
 	<delete id="delete" parameterType ="GuestVo">
-	
-		delete  from guestbook
-		where 	no = #{no} and password = #{pw}
-	
+		
+		<![CDATA[
+		
+			delete  from guestbook
+			where 	no = #{no} and password = #{pw}
+			
+		]]>
 	
 	</delete>
 	
+	<!-- ajax 글저장 -->
+	<insert id = "insertSelectKey" parameterType= "GuestVo">
+		
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select seq_guest_no.nextval
+			from dual
+			
+		</selectKey>
+		
+		<![CDATA[
+			
+			insert into guestbook
+			
+			values(#{no}, #{name}, #{pw}, #{content}, sysdate)
+			
+		]]>
+		
+
 	
-	
-	
-	
+	</insert>
 
 
 

@@ -9,7 +9,7 @@
 	
 	
 	<head>
-	
+		<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
 		<meta charset="UTF-8">
 		
 		<title>JoinForm</title>
@@ -17,58 +17,41 @@
 		<link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 		<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
 		
+		<!-- 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		
+		 -->
 
 		
 		<script type="text/javascript">
 		
-		function checkName(){
+
+		
+		/*
+		function checkNull(){
 			
-		
-		console.log($("#input-uid").val());
-		console.log($("#input-pass").val());
-		console.log($("#input-name").val());
-			
-		}
-		</script>
-		
-		
-		
-		
-		<!--  
-		<script>
-			function checkValue(){
-				
-				if(!document.userInfo.uid.value){
-					alert("id를 입력해주세요");
-					return false;
-				}
-				
-				if(!document.userInfo.pw.value){
-					alert("비밀번호를 입력해주세요");
-					return false;
-				}
-				
-				if(!document.userInfo.uname.value){
-					alert("이름을 입력해주세요");
-					return false;
-				}
-				
-				if(!document.userInfo.gender.value){
-					alert("성별을 선택해주세요");
-					return false;
-				}
-				
-				
+			if(!document.userInfo.id.value){
+				alert("아이디를 입력하세요");
+				return false;
+			}
+			if(!document.userInfo.pw.value){
+				alert("패스워드를 입력하세요")
+				return false;
+			}
+			if(!document.userInfo.gender.value){
+				alert("성별을 체크해주세요");
+				return false;
+			}
+			if(!document.userInfo.name.value){
+				alert("이름을 입력해주세요");
+				return false;
 			}
 			
 			
-		
-		
+		}
+		*/
 		</script>
 		
-		-->
+		
 	</head>
 	
 	<body>
@@ -110,22 +93,23 @@
 				
 					
 					<div id="joinForm">
-					
-						<form action="${pageContext.request.contextPath }/user/join" method="post" name="userInfo" 
-						onsubmit = "return checkName();">
-	
-							<!-- 아이디 -->
+					action="${pageContext.request.contextPath }/user/join" 
+						<form id="joinfrm" method="post" name="userInfo" 
+						onsubmit = "return checkAll();">
+						
+						<!-- 아이디 -->
+						
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-								<button type="submit" id="" onclick="">중복체크</button>
-								
+								<button type="button" id="btnCheck" onclick="checkId()">중복체크</button>
+								<p id="msg"></p>
 							</div>
 	
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
-								<input type="text" id="input-pass" name="pw" value="" placeholder="비밀번호를 입력하세요"	>
+								<input type="password" id="input-pass" name="pw" value="" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
 							<!-- 이름 -->
@@ -180,5 +164,122 @@
 		<!-- //wrap -->
 	
 	</body>
+	
+	<script type="text/javascript">
+		
+		function checkAll(){
+			
+			let chkId = $("#input-uid").val();
+			let chkPw = $("#input-pass").val();
+			let chkName = $("#input-name").val();
+			let chkGender = $("input[name='gender']:checked").val();
+			let chkAgree = $("#chk-agree").is(":checked");
+			
+			
+			let idPatt = /[^a-zA-Z0-9]/g;
+			let pwPatt = /[a-zA-Z0-9]/g;
+			let white = /[\s]/;
+			let special = /[^A-Za-z0-9]{1}/g;
+			
+			if(!chkId){
+				alert("아이디를 입력해주세요");
+				return false;
+			}
+			
+			if(idPatt.test(chkId)){
+				
+				alert("아이디는 영 소-대문자 숫자만 가능합니다");
+				return false;
+			}
+												
+			if(!chkPw){
+				alert("패스워드를 입력해주세요");
+				return false;
+			}	
+			
+			if(chkPw.length <8){
+				alert("패스워드는 8글자 이상 가능합니다");
+				return false;
+			}
+			
+			if(white.test(chkPw) || special.exec(chkPw)== null){
+				
+				alert("비밀번호는 영 소-대문자 하나 이상의 특수문자를 비밀번호에 넣어주세요");
+				return false;
+			}
+			
+			if(!chkName){
+				alert("이름을 입력해주세요");
+				return false;
+			}	
+			
+			if(!chkGender){
+				alert("성별을 체크해주세요");
+				return false;
+			}
+			
+			if(!chkAgree){
+				alert("약관에 동의해주세요");
+				return false;
+			}
+				
+			
+			
+			return false;
+		}
+		
+	
 
+	
+		function checkId(){
+			let uid = $("#input-uid").val();
+			
+			let idPatt = /[^a-zA-Z0-9]/g;
+			
+			if(idPatt.test(uid)){
+				alert("아이디는 영 소-대문자와 숫자만 가능합니다");
+				return false;
+			}
+			
+			
+			
+			
+			$.ajax({
+				
+				url : "${pageContext.request.contextPath}/user/idCheck",
+				type : "post",
+				dataType : "text",
+				
+				
+				data : { id: uid },
+							
+				success : function(result){
+					
+					if(result === "can"){
+						alert("사용할 수 있는 아이디입니다");
+						
+					}
+					else{
+						alert("중복된 아이디입니다");
+						
+					}
+				},
+				
+				error : function(XHR, status, error){
+					console.log(status + ":" + error);
+				}
+				
+			})
+			
+			
+		}
+	
+		
+	
+	</script>
+	
+	
+	
+	
+	
 </html>

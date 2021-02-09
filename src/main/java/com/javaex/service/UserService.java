@@ -21,6 +21,24 @@ public class UserService {
 	}
 	
 	
+	public String idCheck(String id) {
+		
+		UserVo usVo = usDao.idCheck(id);
+		String result=null;
+		
+		if(usVo==null) {
+			result="can";
+		}
+		else {
+			result="cant";
+		}
+		
+		return result;		
+	}
+	
+	
+	
+	
 	//로그인
 	public UserVo login(UserVo usVo) {
 		

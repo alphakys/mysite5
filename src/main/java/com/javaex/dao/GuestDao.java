@@ -38,5 +38,22 @@ public class GuestDao {
 	}
 	
 	
+	//ajax 글저장
+	public void insertSelectKey(GuestVo guVo) {
+		
+		sqlSession.insert("guest.insertSelectKey", guVo);
+		
+	}
+	
+	
+	
+	public GuestVo selectOne(int no) {
+		
+		GuestVo guVo = sqlSession.selectOne("guest.selectOne", no);
+		
+		return guVo;
+	}
+	
+
 	
 }

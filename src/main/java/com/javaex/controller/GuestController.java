@@ -65,10 +65,13 @@ public class GuestController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-}
+	@RequestMapping(value="ajaxList", method = {RequestMethod.GET, RequestMethod.POST})
+	public String ajaxList() {
+		
+		
+		return "guestbook/ajaxList";
+	}
+		
+		
+		
+}	

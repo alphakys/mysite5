@@ -22,6 +22,17 @@ public class UserDao {
 		
 	}
 	
+	
+	public UserVo idCheck(String id) {
+		
+		UserVo usVo = sqlSession.selectOne("user.selectId", id);
+	
+		return usVo;
+	}
+	
+	
+	
+	
 	//로그인을 위한 메서드 
 	//id와 비번 일치하는지 확인 후 맞을시 세션에 넣을 정보 얻어옴
 	public UserVo getOne(UserVo usVo) {

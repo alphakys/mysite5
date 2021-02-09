@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
@@ -26,6 +28,18 @@ public class UserController {
 		return "user/joinForm";
 	}
 	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="idCheck", method={RequestMethod.GET, RequestMethod.POST})
+	public String idCheck(@RequestParam ("id") String id) {
+		
+		String result = usService.idCheck(id);
+			
+		return result; //@Responsebody --> response의 body 영역에 data만 보냄
+	}
+	
+
 	//DB에 회원가입 정보 등록
 	@RequestMapping(value="join", method= {RequestMethod.GET, RequestMethod.POST})
 	public String join(@ModelAttribute UserVo usVo) {

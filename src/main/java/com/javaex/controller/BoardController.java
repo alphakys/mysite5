@@ -65,8 +65,7 @@ public class BoardController {
 	}
 	
 	
-	
-	
+
 	
 	//게시글 읽는 메소드
 	@RequestMapping(value="read", method= {RequestMethod.GET, RequestMethod.POST})

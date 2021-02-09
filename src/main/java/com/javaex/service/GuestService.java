@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.javaex.dao.GuestDao;
 import com.javaex.vo.GuestVo;
 
@@ -35,6 +36,17 @@ public class GuestService {
 		return result;
 	}
 	
+	
+	public GuestVo writeResultVo(GuestVo guVo) {
+		
+		guDao.insertSelectKey(guVo);
+		
+		int no = guVo.getNo();
+	
+		return guDao.selectOne(no);
+	}
+	
+
 	
 	
 }

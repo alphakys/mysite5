@@ -89,9 +89,7 @@ public class BoardService {
 		return paVo;
 	}
 	
-	
-	
-	
+
 	
 	
 	public int getTotalPost() {

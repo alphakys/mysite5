@@ -55,14 +55,17 @@ public class GuestVo {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
+
 	//메서드
-	
 	@Override
 	public String toString() {
-		return "GuestBookVo [no=" + no + ", name=" + name + ", password=" + pw + ", content=" + content
-				+ ", date=" + date + "]";
+		return "GuestVo [no=" + no + ", name=" + name + ", pw=" + pw + ", content=" + content + ", date=" + date + "]";
 	}
+	
+	
+	
+	
 	
 	
 }

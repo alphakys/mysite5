@@ -18,6 +18,21 @@
 	</insert>
 	
 	
+	<select id="selectId" parameterType="String" resultType="UserVo">
+	
+		<![CDATA[
+		
+			select		id
+			from 		users
+			where		id = #{id}
+		
+		]]>
+	
+	
+	</select>
+	
+	
+	
 	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
 	
 			<![CDATA[
