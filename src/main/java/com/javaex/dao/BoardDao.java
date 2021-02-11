@@ -2,6 +2,7 @@ package com.javaex.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +99,11 @@ public class BoardDao {
 	}
 	
 	
-	
+	public int ajaxDel(Map<String, Object> map) {
+		
+		System.out.println(map.get("pw"));
+		return sqlSession.delete("board.ajaxDel",map);
+	}
 	
 	
 	

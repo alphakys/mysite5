@@ -31,9 +31,9 @@ public class GuestService {
 	
 	public int delete(GuestVo guVo) {
 		
-		int result = guDao.delete(guVo);
+		int count = guDao.delete(guVo);
 		
-		return result;
+		return count;
 	}
 	
 	

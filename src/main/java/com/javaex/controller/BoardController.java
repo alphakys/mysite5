@@ -145,8 +145,11 @@ public class BoardController {
 	}
 	
 	
-	
-	
+	@RequestMapping(value="ajList", method= {RequestMethod.POST, RequestMethod.GET})
+	public String ajList() {
+		
+		return "board/ajList";
+	}
 	
 	
 	

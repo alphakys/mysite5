@@ -196,7 +196,19 @@
 	
 	
 	
+	<!-- 연습 -->
+	<delete id="ajaxDel" parameterType="map">
+		
+		<![CDATA[
+		
+			delete		rboard
+			
+			where		no = #{no} and password= #{pw}
+			
+		]]>
 	
+	
+	</delete>
 	
 	
 

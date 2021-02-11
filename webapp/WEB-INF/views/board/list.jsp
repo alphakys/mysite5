@@ -117,7 +117,7 @@
 							<td>
 								<c:if test="${authUser.no eq boVo.userNo}">
 
-									<a href="${pageContext.request.contextPath }/board/delete&no=${boVo.no}">[삭제]</a>
+									<a href="${pageContext.request.contextPath }/board/delete?no=${boVo.no}">[삭제]</a>
 
 								</c:if>
 								

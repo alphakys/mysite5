@@ -32,9 +32,9 @@ public class GuestDao {
 	
 	public int delete(GuestVo guVo) {
 		
-		int result = sqlSession.delete("guest.delete", guVo);
+		int count = sqlSession.delete("guest.delete", guVo);
 				
-		return result;		
+		return count;		
 	}
 	
 	

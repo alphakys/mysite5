@@ -70,15 +70,13 @@ public class BoardVo {
 		}
 		
 		
-		
 		@Override
 		public String toString() {
-			return "RboardVo [no=" + no + ", userNo=" + userNo + ", hit=" + hit + ", groupNo=" + groupNo + ", orderNo="
-					+ orderNo + ", depth=" + depth + ", title=" + title + ", content=" + content + ", date=" + date
-					+ "]";
+			return "BoardVo [no=" + no + ", userNo=" + userNo + ", hit=" + hit + ", groupNo=" + groupNo + ", orderNo="
+					+ orderNo + ", depth=" + depth + ", name=" + name + ", title=" + title + ", content=" + content
+					+ ", date=" + date + "]";
 		}
 		
-		
-	
+
 	
 }
