@@ -4,8 +4,8 @@
 <mapper namespace="board">
 
 
-
-	<select id="selectList" resultType="BoardVo" parameterType="int">
+	<!-- 페이지 객체 만들어서 내가 한 방식 -->
+	<select id="selectList1" resultType="BoardVo" parameterType="int">
 	
 			<![CDATA[
 		
@@ -36,11 +36,49 @@
 	
 	</select>
 
-
-
-	<select id="selectSearchList" resultType="BoardVo" parameterType="map">
+	<!-- 파라미터 string만으로 넘길 때 방식 일부러 남긴거 value!!!! -->
+	<select id="selectList2" parameterType="string" resultType="BoardVo">
 	
-			<![CDATA[
+		<![CDATA[	
+		
+		select		
+				            b.no no,
+				            title,
+				            u.name name,
+				            content,
+				            hit,
+				            reg_date "date",
+				            user_no userNo,
+				            group_no groupNo,
+				            order_no orderNo,
+				            depth
+				             
+				from rboard b,(select   rownum r,
+				                        no
+				              from    (select       rownum,
+				                                    no
+				                       from         rboard
+				]]>                      
+				                       
+				                       <if test = "value != null and value !=''  ">
+										where title like '%' || #{keyword} || '%'							
+									   </if>
+				<![CDATA[						
+				                       order by no desc)
+				              )ro, users u                
+				where b.no = ro.no and u.no = b.user_no
+				order by group_no desc, order_no asc
+				]]>
+			
+		
+	</select>
+	
+	
+	
+	
+	<select id="selectList" parameterType="map" resultType="BoardVo">
+	
+		<![CDATA[	
 		
 				select		
 				            b.no no,
@@ -55,34 +93,40 @@
 				            depth
 				             
 				from rboard b,(select   rownum r,
-				                       no
+				                        no
 				              from    (select       rownum,
 				                                    no
 				                       from         rboard
 				                       order by no desc)
 				              )ro, users u                
 				where b.no = ro.no and u.no = b.user_no
-				and r >= ((#{page}-1)*10) +1 and r <= (#{page}*10)
-				and u.name = #{keyword} 
-				order by group_no desc, order_no asc
+		]]>
 				
-			]]>
-	
+				<if test = "keyword != null and keyword !=''  ">
+					and title like '%' || #{keyword} || '%'							
+				</if>
+				
+				<![CDATA[
+				 and r >= #{startNum} and r <= #{endNum}
+				 order by group_no desc, order_no asc
+				 
+				]]>
+		
 	</select>
-
-
-
-
+	
+	
 
 	
-	<select id="selectTotalPost" resultType = "int">
+	<select id="selectTotalPost" parameterType="string" resultType = "int">
 		
 		<![CDATA[
 			
 			select count(no)
 			from rboard		
 		]]>
-		
+			<if test=" value != null and value !='' ">
+				where title like '%' || #{keyword} || '%'
+			</if>
 	
 	
 	</select>

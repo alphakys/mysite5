@@ -17,7 +17,7 @@ public class BoardDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
+	/*
 	public List<BoardVo> selectList(int page){
 		
 		List<BoardVo> boList = sqlSession.selectList("board.selectList", page);
@@ -26,24 +26,26 @@ public class BoardDao {
 		
 
 	}
+	*/
 	
 	
-	public List<BoardVo> selectSearchList(HashMap<String, Object> keywordMap){
+	public List<BoardVo> selectList(String keyword, int startNum, int endNum) {
 		
-		List<BoardVo> searchList = sqlSession.selectList("board.selectSearchList", keywordMap);
+		Map<String, Object> map = new HashMap<>();
 		
-		return searchList;
+		map.put("keyword", keyword);
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
 		
+		return sqlSession.selectList("board.selectList", map);
 	}
 	
 	
 	
 	
-	
-	
-	public int selectTotalPost() {
+	public int selectTotalPost(String keyword) {
 		
-		int totalPost = sqlSession.selectOne("board.selectTotalPost");
+		int totalPost = sqlSession.selectOne("board.selectTotalPost", keyword);
 		
 		return totalPost;
 	}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.vo.BoardVo;
-import com.javaex.vo.PageVo;
+
 
 
 
@@ -20,7 +20,7 @@ public class BoardService {
 	@Autowired
 	private BoardDao boDao;
 	
-	
+	/* 페이지 객체로 만들어서 페이징 했던 내가 한 방식
 	public HashMap<String, Object> getList(int page){
 		
 		List<BoardVo> boList = boDao.selectList(page);	
@@ -35,31 +35,70 @@ public class BoardService {
 		return listMap;
 	}
 	
-	public HashMap<String, Object> getSearchList(HashMap<String, Object> keywordMap){
+	*/
+	
+	public Map<String, Object> getList(String keyword, int crtPage){
 		
-		List<BoardVo> searchList = boDao.selectSearchList(keywordMap);
+		int lastPage;
+		int totalPost = boDao.selectTotalPost(keyword);
 		
-		int page = (int)(keywordMap.get("page"))-1;
-		PageVo pageVo = paging(page);
+		int listCnt = 10;
 		
-		HashMap<String, Object> searchListMap = new HashMap<>();
+		if(totalPost%listCnt !=0) {
+			lastPage = (totalPost/listCnt)+1;
+				
+		}
 		
-		searchListMap.put("searchList", searchList);
-		searchListMap.put("pageVo", pageVo);
-
-		return searchListMap;
+		else {
+			lastPage = totalPost/listCnt;
+			
+		}
+		//페이지당 글 갯수
+		crtPage = (crtPage >0) ? crtPage : (crtPage=1);
+		crtPage = (crtPage> lastPage) ? crtPage=lastPage : crtPage;	
+		
+		
+		int startNum = ((crtPage-1)* listCnt) +1;
+		
+		int endNum = crtPage * listCnt;
+		
+		
+		//페이징
+		
+		int pageCount = 5;
+		
+		int startPage = (((crtPage-1)/pageCount)*pageCount)+1;
+		
+		int endPage = startPage+4;
+		
+		
+		//만약 출력해야할 끝 페이지가 총 게시글중 마지막 페이지 보다 클 경우 총 게시글 마지막 페이지 출력
+		
+		endPage = (endPage> lastPage) ? endPage=lastPage : endPage;
+		
+		crtPage = (crtPage> lastPage) ? crtPage=lastPage : crtPage;
+		
+		Map<String, Object> paMap = new HashMap<>();	
+			
+		paMap.put("boList", boDao.selectList(keyword, startNum, endNum));
+		paMap.put("startPage", startPage);
+		paMap.put("endPage", endPage);
+		paMap.put("lastPage", lastPage);
+			
+		return paMap;
 	}
 	
 	
 	
+	/*내가 스스로 생각한 10개씩 페이징
 	
-	public PageVo paging(int page) {
+	public PageVo paging(int page, String keyword) {
 		//첫 페이지
 		int startPage = ((page/10)*10)+1;
 		//10개 단위중 끝 페이지 10,20,30~~
 		int endPage = ((page/10)+1)*10;
 		//총 게시글의 마지막 페이지를 알기 위한 모든 게시글 count해서 가져온 값
-		int totalPost = boDao.selectTotalPost();
+		int totalPost = boDao.selectTotalPost(keyword);
 		
 		//게시판의 가장 마지막 페이지
 		int lastPage;
@@ -68,9 +107,9 @@ public class BoardService {
 		//게시글이 100, 200, 10으로 나누어 떨어질 때는 총 게시글을 10으로 나눈 몫이 마지막 페이지
 		if(totalPost%10 !=0) {
 			lastPage = (totalPost/10)+1;
-			
-			
+				
 		}
+		
 		else {
 			lastPage = totalPost/10;
 			
@@ -88,15 +127,15 @@ public class BoardService {
 		paVo.setLastPage(lastPage);
 		
 		return paVo;
+		
 	}
 	
+	*/
 
-	
-	
-	public int getTotalPost() {
+	public int getTotalPost(String keyword) {
 		
-		int totalPost = boDao.selectTotalPost();
-		
+		int totalPost = boDao.selectTotalPost(keyword);
+	
 		return totalPost;
 	}
 	

@@ -64,12 +64,12 @@
 
 		<div id="list">
 
-			<form action="${pageContext.request.contextPath }/board/search" method="post">
+			<form action="${pageContext.request.contextPath }/board/list" method="get">
 				
-				<input type="hidden" name="page" value="1">
-
 				<div class="form-group text-right">
+					
 					<input type="text" name="keyword">
+					
 					<button type="submit" id=btn_search>검색</button>
 				</div>
 
@@ -90,7 +90,7 @@
 				</thead>
 
 
-				<c:forEach items="${boList}" var="boVo">
+				<c:forEach items="${paMap.boList}" var="boVo">
 				
 					<tbody>
 					
@@ -143,22 +143,22 @@
 
 				<ul>
 					<!-- ◀◀첫 페이지 -->
-					<li><a href="${pageContext.request.contextPath }/board/list?page=1">◀◀</a></li>
+					<li><a href="${pageContext.request.contextPath }/board/list?crtPage=1&keyword=${param.keyword}">◀◀</a></li>
 
 
 					<!--◀ 이전 페이지  -->
 					
 					<c:choose>
 					
-						<c:when test="${param.page <= 1}">
+						<c:when test="${param.crtPage <= 1}">
 
-							<li><a href="${pageContext.request.contextPath }/board/list?page=1">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?crtPage=1&keyword=${param.keyword}">◀</a></li>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<li><a href="${pageContext.request.contextPath }/board/list?page=${param.page -1}">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${param.crtPage -1}&keyword=${param.keyword}">◀</a></li>
 
 						</c:otherwise>
 						
@@ -172,18 +172,18 @@
 					
 					<!-- active 기능 구현 -->
 					
-				<c:forEach var="page" begin="${pageVo.startPage }" end="${pageVo.endPage }">
+				<c:forEach var="page" begin="${paMap.startPage }" end="${paMap.endPage }">
 
 					<c:choose>
-						<c:when test="${param.page eq page }">
+						<c:when test="${param.crtPage eq page }">
 							<li class="active">
-								<a href="${pageContext.request.contextPath }/board/list?page=${page }">${page}</a>
+								<a href="${pageContext.request.contextPath }/board/list?crtPage=${page }&keyword=${param.keyword}">${page}</a>
 							</li>
 						</c:when>
 
 						<c:otherwise>
 							<li>
-								<a href="${pageContext.request.contextPath }/board/list?page=${page }">${page}</a>
+								<a href="${pageContext.request.contextPath }/board/list?crtPage=${page }&keyword=${param.keyword}">${page}</a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -198,15 +198,15 @@
 												
 					<c:choose>
 					
-						<c:when test="${param.page >= pageVo.lastPage}">
+						<c:when test="${param.crtPage >= paMap.lastPage}">
 
-							<li><a href="${pageContext.request.contextPath }/board/list?page=${pageVo.lastPage}">▶</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${paMap.lastPage}">▶</a></li>
 
 						</c:when>
 
 						<c:otherwise>
 
-							<li><a href="${pageContext.request.contextPath }/board/list?page=${param.page +1}">▶</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${param.crtPage +1}">▶</a></li>
 
 						</c:otherwise>
 						
@@ -216,7 +216,7 @@
 
 				<!-- 마지막 페이지 -->
 				
-				<li><a href="${pageContext.request.contextPath }/board/list?page=${pageVo.lastPage}">▶▶</a></li>
+				<li><a href="${pageContext.request.contextPath }/board/list?crtPage=${paMap.lastPage}">▶▶</a></li>
 				
 				<!-- 마지막 페이지 -->
 

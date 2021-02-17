@@ -371,42 +371,6 @@
 		}
 		
 
-		/*
-		<tbody>
-		
-		<tr>
-			<td>1</td>
-						
-			<c:choose>
-			
-				<c:when test="${boVo.depth > 0 }">
-					<td class="text-left"><a href="${pageContext.request.contextPath }/board/read?no=${boVo.no}"><pre>${boVo.title }(${boVo.groupNo}번댓글)</pre></a></td>
-				</c:when>
-				
-				<c:otherwise>
-					<td class="text-left"><a href="${pageContext.request.contextPath }/board/read?no=${boVo.no}"><pre>${boVo.title }</pre></a></td>
-				</c:otherwise>
-			
-			</c:choose>
-			
-			<td>강용수</td>
-			<td>조회수:1</td>
-			<td>날짜</td>
-
-			<td>
-				<a href="${pageContext.request.contextPath }/board/delete?no=${boVo.no}">[삭제]</a>
-
-				<a href="${pageContext.request.contextPath }/board/writeForm?groupNo=${boVo.groupNo}&orderNo=${boVo.orderNo}&depth=${boVo.depth}&type=reply">[댓글달기]</a>
-							
-			</td>
-
-		</tr>
-	
-	</tbody>
-	*/
-	
-	
-	
 	
 	
 	</script>

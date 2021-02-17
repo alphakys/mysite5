@@ -38,8 +38,8 @@
 			<div id="nav">
 				<ul>
 					<li><a href="${pageContext.request.contextPath }/guest/ajaxList">방명록</a></li>
-					<li><a href="${pageContext.request.contextPath }">갤러리</a></li>
-					<li><a href="${pageContext.request.contextPath }/board/list?page=1">게시판</a></li>
+					<li><a href="${pageContext.request.contextPath }/gallery/list">갤러리</a></li>
+					<li><a href="${pageContext.request.contextPath }/board/list">게시판</a></li>
 					<li><a href="${pageContext.request.contextPath }">입사지원서</a></li>
 				</ul>
 				<div class="clear"></div>
